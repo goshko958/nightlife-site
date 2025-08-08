@@ -1,44 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Nightlife Roleplay — Resurgence</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моят Сървър</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #111; color: #fff; }
+        nav { background: #222; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: white; margin: 0 10px; text-decoration: none; }
+        .about { display: none; padding: 20px; background: #1a1a1a; }
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background: #333; min-width: 150px; z-index: 1; }
+        .dropdown-content a { display: block; padding: 10px; color: white; text-decoration: none; }
+        .dropdown-content a:hover { background: #444; }
+        .dropdown:hover .dropdown-content { display: block; }
+        button { background: #ff6600; border: none; padding: 10px 15px; cursor: pointer; color: white; border-radius: 5px; }
+    </style>
 </head>
 <body>
-<canvas id="bg-canvas"></canvas>
 
-<header class="hero">
-  <h1 class="glitch" data-text="NIGHTLIFE ROLEPLAY:">NIGHTLIFE ROLEPLAY:</h1>
-  <p class="subtitle">RESURGENCE</p>
-
-  <div class="stats" aria-hidden="false">
-    <div class="card">
-      <div class="num" data-target="1300">0</div>
-      <div class="label">CHARACTERS</div>
+<nav>
+    <div>
+        <a href="#" onclick="toggleAbout()">About</a>
+        <div class="dropdown">
+            <button>Социални</button>
+            <div class="dropdown-content">
+                <a href="https://youtube.com/" target="TheDarkShadow Gaming">YouTube</a>
+                <a href="https://twitch.tv/" target="thedarkshadow901">Twitch</a>
+                <a href="https://tiktok.com/" target="NightLifeRP">TikTok</a>
+            </div>
+        </div>
     </div>
-    <div class="card magenta">
-      <div class="num" data-target="850">0</div>
-      <div class="label">DISCORD MEMBERS</div>
-    </div>
-    <div class="card cyan">
-      <div class="num" data-target="1500">0</div>
-      <div class="label">HOURS PLAYED</div>
-    </div>
-  </div>
+</nav>
 
-  <div class="buttons">
-    <a class="btn primary" href="#">Join Now →</a>
-    <a class="btn secondary" href="#">Learn More ⓘ</a>
-  </div>
-</header>
+<div class="about" id="about">
+    <h2>Информация за сървъра</h2>
+    <p>Добре дошли в нашия сървър! Тук ще намерите много забавления, приятели и събития.</p>
+    <p><strong>Discord Members:</strong> <span id="discordCount">Зареждане...</span></p>
+</div>
 
-<footer class="footer">
-  <div class="devs">Developers: <span>TheDarKShadow90 &amp; MazdaRX7</span></div>
-  <div class="small">Made with ♥ — Open for customization</div>
-</footer>
+<script>
+function toggleAbout() {
+    let about = document.getElementById('about');
+    about.style.display = about.style.display === 'block' ? 'none' : 'block';
+}
 
-<script src="app.js"></script>
+// Пример за вземане на броя Discord членове
+fetch('https://discord.com/api/guilds/1396137231088877578/widget.json')
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('discordCount').textContent = data.presence_count + ' online';
+    })
+    .catch(() => {
+        document.getElementById('discordCount').textContent = 'Няма връзка';
+    });
+</script>
+
 </body>
 </html>

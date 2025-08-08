@@ -1,0 +1,195 @@
+/* style.css - Nightlife style */
+:root{
+  --bg:#050505;
+  --cyan:#00f0ff;
+  --magenta:#c400ff;
+  --neon:#7afcff;
+  --glass: rgba(255,255,255,0.03);
+  --card-bg: rgba(255,255,255,0.02);
+  --accent: linear-gradient(90deg,var(--cyan),var(--magenta));
+  --font-sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#e8e8e8;
+  font-family:var(--font-sans);
+  overflow:hidden;
+}
+
+/* Canvas covers whole screen */
+#bg-canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* Centered hero */
+.hero{
+  position:relative;
+  z-index:2;
+  min-height:70vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:4rem 1rem;
+}
+
+/* Glitch headline */
+.glitch{
+  font-size:6.2vw;
+  max-width:1200px;
+  letter-spacing:6px;
+  line-height:0.95;
+  font-weight:800;
+  color:#fff;
+  position:relative;
+  margin:0;
+  text-transform:uppercase;
+  -webkit-user-select:none;
+}
+.subtitle{
+  margin-top:8px;
+  color:#b6a6ff;
+  letter-spacing:6px;
+  font-size:1rem;
+  font-weight:600;
+  opacity:0.9;
+}
+
+/* CSS glitch using pseudo elements */
+.glitch::before,
+.glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:0; top:0;
+  width:100%;
+  overflow:hidden;
+  clip:rect(0,9000px,0,0);
+}
+.glitch::before{
+  left:2px;
+  text-shadow:-6px 0 var(--magenta);
+  animation:glitchTop 2.5s infinite linear alternate-reverse;
+  color:transparent;
+  -webkit-mask-image:linear-gradient(#000,transparent);
+}
+.glitch::after{
+  left:-2px;
+  text-shadow:-2px 0 var(--cyan);
+  animation:glitchBottom 3s infinite linear alternate-reverse;
+  color:transparent;
+  -webkit-mask-image:linear-gradient(transparent,#000);
+}
+
+@keyframes glitchTop{
+  0%{clip:rect(0,9000px,0,0); transform:translate(0,0)}
+  10%{clip:rect(0,9000px,40px,0); transform:translate(-2px,-2px)}
+  20%{clip:rect(10px,9000px,50px,0); transform:translate(2px,1px)}
+  30%{clip:rect(0,9000px,10px,0); transform:translate(-1px,0)}
+  100%{clip:rect(0,9000px,0,0); transform:translate(0,0)}
+}
+@keyframes glitchBottom{
+  0%{clip:rect(0,9000px,0,0); transform:translate(0,0)}
+  10%{clip:rect(50px,9000px,90px,0); transform:translate(1px,2px)}
+  25%{clip:rect(20px,9000px,40px,0); transform:translate(-2px,-1px)}
+  50%{clip:rect(0,9000px,0,0); transform:translate(0,0)}
+}
+
+/* Stats cards */
+.stats{
+  display:flex;
+  gap:1.6rem;
+  margin-top:2.4rem;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.card{
+  min-width:200px;
+  padding:1.2rem 1.6rem;
+  background:var(--card-bg);
+  border-radius:10px;
+  border:2px solid rgba(255,255,255,0.06);
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);
+  text-align:center;
+  backdrop-filter:blur(6px);
+}
+.card .num{
+  font-size:2.4rem;
+  font-weight:800;
+  color:var(--neon);
+  letter-spacing:2px;
+}
+.card .label{
+  margin-top:6px;
+  font-size:0.75rem;
+  color:#bfbfbf;
+  letter-spacing:2px;
+}
+
+/* color variants */
+.card.magenta .num{ color:var(--magenta); }
+.card.cyan .num{ color:var(--cyan); }
+
+/* Buttons */
+.buttons{ margin-top:2.4rem; display:flex; gap:1rem; justify-content:center; }
+.btn{
+  display:inline-block;
+  padding:0.9rem 1.6rem;
+  border-radius:10px;
+  border:2px solid rgba(255,255,255,0.06);
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:1px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.6);
+}
+.btn.primary{
+  background:var(--accent);
+  color:#050505;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-size:200% 200%;
+  animation:shift 4s linear infinite;
+  border:2px solid rgba(255,255,255,0.06);
+  padding:0.9rem 2rem;
+}
+@keyframes shift{ 0%{background-position:0%} 100%{background-position:200%} }
+.btn.secondary{ background:rgba(255,255,255,0.02); color:#cfcfcf }
+
+/* Footer */
+.footer{
+  position:fixed;
+  left:0; right:0; bottom:18px;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  pointer-events:none;
+}
+.footer .devs{
+  pointer-events:auto;
+  font-weight:700;
+  background:linear-gradient(90deg,#00f0ff,#c400ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:1px;
+}
+.footer .small{ color:rgba(255,255,255,0.15); font-size:12px }
+
+/* Responsiveness */
+@media (max-width:720px){
+  .glitch{ font-size:12vw; letter-spacing:2px }
+  .stats{ gap:1rem }
+  .card{ min-width:140px; padding:0.8rem 1rem }
+  .buttons{ flex-direction:column }
+}
+
+/* subpixel niceness */
+h1,h2,p{margin:0;padding:0}
